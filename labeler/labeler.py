@@ -7,12 +7,24 @@ from helpers.getsentences import *
 from nltk import sent_tokenize
 from bs4 import BeautifulSoup
 from markdown import markdown
+import random
 button_delay = 0.2
 
+
+def makeTextList():
+    textList = list()
+    with open('../data/data.csv', 'r') as csvFile:
+        reader=csv.reader(csvFile)
+        for line in reader:
+            sentences = getSentences(line[0])
+            for sentence in sentences:
+                textList.append(sentence)
+    return textList
+
 #code to load row from save.p
-def getRow():
+def getList():
     if os.stat('save.p').st_size == 0:
-        return 0
+        return makeTextList()
     else:
         return pickle.load( open( "save.p", "rb" ) )
 
@@ -23,18 +35,13 @@ def getSentences(text):
 
 # Importing whole text column of data.csv into list
 # TODO: make data.csv one column, or just use a text file
-def makeTextList():
-    textList = list()
-    with open('../data/test.csv', 'r') as csvFile:
-        reader=csv.reader(csvFile)
-        for line in reader:
-            textList.append(getSentences(line[0]))
-    return textList
 
-def label_sentences(text):
-    index = 0
-    while index < len(paragraph):
-        print("\n" + paragraph[index] + "\n" + "positve[1], negative[2], neutral[3]")
+
+def label_sentences(sentences):
+    while (len(sentences) != 0):
+        index = random.randint(0, len(list) - 1)
+        print(len(sentences))
+        print("\n" + sentences[index] + "\n" + "positve[1], negative[2], neutral[3]")
         char = getch()
         if (char == "1"):
             sentiment = "positive"
@@ -43,18 +50,21 @@ def label_sentences(text):
         elif (char == "3"):
             sentiment = "neutral"
         elif(char == "s"):
-            sentiment = "null"
+            del(sentences[index])
+            continue
         elif(char == "q"):
+            pickle.dump(sentences, open( "save.p", "wb" ))
             exit(0)
         else:
-            sentiment = "null"
-            index -= 1
             print("invalid input")
-        if (sentiment != "null"):
-            row = [sentiment,paragraph[index]]
-            with open('data-labeled.csv','a') as fd:
-                writer = csv.writer(fd)
-                writer.writerow(row)
-        index += 1
+            continue
+
+        row = [sentiment,sentences[index]]
+        with open('../data/data-labeled.csv','a') as fd:
+            writer = csv.writer(fd)
+            writer.writerow(row)
+        del(sentences[index])
+
 if (__name__ == "__main__"):
-    print(makeTextList())
+     list = getList()
+     label_sentences(list)
