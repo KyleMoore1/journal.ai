@@ -11,7 +11,7 @@ When I came up with the idea for this project, my biggest concern was where to f
 After parsing the posts into sentences, I had 31,818 pieces of data to label, so I needed to create a CLI tool to expedite that process. All code for labeling is contained in `labeler/labeler.py`. My labeling tool contains a few features: 1) Fast labeling 2) Memory of what has been labeled so everything doesn't have to be labeled at once. 3) Randomized choice of sentence to label (I needed this feature to limit my bias). Labeled data is stored in a csv. This part of the project is still in progress.
 
 ## Data
-This project deals with sensitive data, and thus I have not included it in this repo. If you would like access to this dataset please contact me. If you want to see how I split my data click [here](https://github.com/KyleMoore1/journal.ai/blob/master/data/data-prep.ipynb)
+This project deals with sensitive data, and thus I have not included it in this repo. If you would like access to this dataset please contact me. If you want to see how I split my data click [here](https://github.com/KyleMoore1/journal.ai/blob/master/data/data-prep.md)
 
 ## Train
 This part of the project is still in progress. Hopefully soon I will upload a Jupyter notebook in this section
